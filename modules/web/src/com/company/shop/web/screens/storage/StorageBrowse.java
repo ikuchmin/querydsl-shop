@@ -34,8 +34,7 @@ public class StorageBrowse extends StandardLookup<Storage> {
         screenBuilders.screen(this)
                 .withScreenClass(OrderCommittedByStorage.class)
                 .withOptions(new OrderCommittedByStorageParams(
-                        storagesTable.getItems().getItems().stream()
-                                .findFirst().get()))
+                        storagesTable.getSingleSelected()))
                 .withOpenMode(OpenMode.DIALOG)
                 .show();
 
