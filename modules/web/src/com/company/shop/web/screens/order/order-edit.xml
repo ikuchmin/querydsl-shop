@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.shop.web.screens.order">
+    <data>
+        <instance id="orderDc"
+                  class="com.company.shop.entity.Order"
+                  view="order-edit-view">
+            <loader/>
+            <collection id="orderItemsDc" property="orderItems"/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="orderDc">
+            <column width="250px">
+                <pickerField id="customerField" property="customer">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                        <action id="clear" type="picker_clear"/>
+                    </actions>
+                </pickerField>
+            </column>
+        </form>
+        <groupBox id="orderItemsBox" caption="msg://com.company.shop.entity/Order.orderItems">
+            <table id="orderItemsTable" dataContainer="orderItemsDc" width="100%" height="200px">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                </actions>
+                <columns>
+                    <column id="product"/>
+                    <column id="count"/>
+                </columns>
+                <buttonsPanel>
+                    <button action="orderItemsTable.create"/>
+                    <button action="orderItemsTable.edit"/>
+                    <button action="orderItemsTable.remove"/>
+                </buttonsPanel>
+            </table>
+        </groupBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

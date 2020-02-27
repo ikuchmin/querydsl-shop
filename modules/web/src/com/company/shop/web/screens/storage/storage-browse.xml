@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="storagesTable"
+        messagesPack="com.company.shop.web.screens.storage">
+    <data readOnly="true">
+        <collection id="storagesDc"
+                    class="com.company.shop.entity.Storage"
+                    view="storage-browse-view">
+            <loader id="storagesDl">
+                <query>
+                    <![CDATA[select e from shop_Storage e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="storagesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="storagesTable"
+                dataLoader="storagesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="storagesTable"
+                    width="100%"
+                    dataContainer="storagesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="storagesTable.create"/>
+                <button id="editBtn" action="storagesTable.edit"/>
+                <button id="removeBtn" action="storagesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
