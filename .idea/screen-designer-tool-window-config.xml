@@ -11,7 +11,7 @@
     <option name="myId2Visible">
       <map>
         <entry key="Component Hierarchy" value="false" />
-        <entry key="Component Inspector" value="false" />
+        <entry key="Component Inspector" value="true" />
         <entry key="Component Palette" value="false" />
       </map>
     </option>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
-        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://browseCaption"
         focusComponent="storagesTable"
         messagesPack="com.company.shop.web.screens.storage">
@@ -31,6 +30,9 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="showCommittedOrders"
+                        caption="msg://showCommiteOrders.caption"
+                        trackSelection="true"/>
             </actions>
             <columns>
                 <column id="name"/>
@@ -41,6 +43,7 @@
                 <button id="createBtn" action="storagesTable.create"/>
                 <button id="editBtn" action="storagesTable.edit"/>
                 <button id="removeBtn" action="storagesTable.remove"/>
+                <button id="showCommitedBtn" action="storagesTable.showCommittedOrders"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

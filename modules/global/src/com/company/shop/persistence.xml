@@ -8,5 +8,6 @@
         <class>com.company.shop.entity.OrderItem</class>
         <class>com.company.shop.entity.Storage</class>
         <class>com.company.shop.entity.StorageItem</class>
+        <class>com.company.shop.entity.OrderStorageItem</class>
     </persistence-unit>
 </persistence>

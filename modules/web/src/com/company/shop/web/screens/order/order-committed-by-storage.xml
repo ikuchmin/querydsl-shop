@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="ordersTable"
+        messagesPack="com.company.shop.web.screens.order">
+    <data readOnly="true">
+        <collection id="ordersDc"
+                    class="com.company.shop.entity.Order"
+                    view="order-commited-view">
+        </collection>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                forceDialog="true"/>
+    <layout spacing="true">
+        <groupTable id="ordersTable"
+                    width="700px"
+                    height="500px"
+                    dataContainer="ordersDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="number"/>
+                <column id="customer"/>
+            </columns>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

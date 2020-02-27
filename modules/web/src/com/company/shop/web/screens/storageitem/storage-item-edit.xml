@@ -10,8 +10,9 @@
             <loader/>
         </instance>
     </data>
-    <dialogMode height="600"
-                width="800"/>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                forceDialog="true"/>
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="storageItemDc">
             <column width="250px">

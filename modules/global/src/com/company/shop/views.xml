@@ -22,4 +22,7 @@
         </property>
     </view>
     <view entity="shop_Storage" name="storage-browse-view" extends="_local"/>
+    <view entity="shop_Order" name="order-commited-view" extends="_local">
+        <property name="customer" view="_minimal"/>
+    </view>
 </views>
