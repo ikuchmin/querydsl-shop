@@ -11,6 +11,7 @@ public class CommitOrderServiceBean implements CommitOrderService {
 
     @Override
     public Order commitOrder(Id<Order, UUID> orderId) {
+
         return null;
     }
 }

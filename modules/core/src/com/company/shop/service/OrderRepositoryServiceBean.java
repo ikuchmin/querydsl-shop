@@ -12,6 +12,11 @@ import java.util.UUID;
 public class OrderRepositoryServiceBean implements OrderRepositoryService {
 
     @Override
+    public Order findOrderByIdNN(Id<Order, UUID> orderId, String viewName) {
+
+    };
+
+    @Override
     public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String viewName) {
         return null;
     }

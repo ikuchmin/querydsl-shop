@@ -10,5 +10,7 @@ import java.util.UUID;
 public interface OrderRepositoryService {
     String NAME = "shop_OrderRepositoryService";
 
+    Order findOrderByIdNN(Id<Order, UUID> orderId, String viewName);
+
     List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String viewName);
 }

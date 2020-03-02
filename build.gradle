@@ -2,6 +2,7 @@
 buildscript {
     ext.cubaVersion = '7.2-SNAPSHOT'
     repositories {
+        mavenLocal()
         maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
@@ -36,6 +37,7 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
+    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:0.1-SNAPSHOT')
 }
 
 def postgres = 'org.postgresql:postgresql:42.2.9'
@@ -76,6 +78,11 @@ configure(globalModule) {
             runtime('javax.xml.bind:jaxb-api:2.3.1')
             runtime('org.glassfish.jaxb:jaxb-runtime:2.3.1')
         }
+
+        compile group: 'com.querydsl', name: 'querydsl-jpa', version: '4.1.4'
+
+        annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: '4.1.4', classifier: 'jpa'
+        annotationProcessor configurations.compile
     }
 
     entitiesEnhancing {
