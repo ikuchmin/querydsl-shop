@@ -9,9 +9,10 @@ import java.util.UUID;
 @Service(CommitOrderService.NAME)
 public class CommitOrderServiceBean implements CommitOrderService {
 
-    @Override
-    public Order commitOrder(Id<Order, UUID> orderId) {
+    protected CommitOrderServiceBeanWorker commitOrderServiceBeanWorker;
 
-        return null;
+    @Override
+    public Order commitOrder(Id<Order, UUID> orderId, String viewName) {
+        return commitOrderServiceBeanWorker.commitOrder(orderId, viewName);
     }
 }

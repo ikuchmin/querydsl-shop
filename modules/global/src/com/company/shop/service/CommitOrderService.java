@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface CommitOrderService {
     String NAME = "shop_CommitOrderService";
 
-    Order commitOrder(Id<Order, UUID> orderId);
+    Order commitOrder(Id<Order, UUID> orderId, String viewName);
 }

@@ -13,6 +13,11 @@
             <map>
                 <entry key="shop_CommitOrderService" value="com.company.shop.service.CommitOrderService"/>
                 <entry key="shop_OrderRepositoryService" value="com.company.shop.service.OrderRepositoryService"/>
+                <entry key="shop_StorageRepositoryService" value="com.company.shop.service.StorageRepositoryService"/>
+                <entry key="shop_OrderItemRepositoryService"
+                       value="com.company.shop.service.OrderItemRepositoryService"/>
+                <entry key="shop_StorageItemRepositoryService"
+                       value="com.company.shop.service.StorageItemRepositoryService"/>
             </map>
         </property>
     </bean>
