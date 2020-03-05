@@ -11,10 +11,17 @@ import java.util.UUID;
 @Service(OrderRepositoryService.NAME)
 public class OrderRepositoryServiceBean implements OrderRepositoryService {
 
+    protected OrderRepositoryServiceBeanWorker repositoryBeanWorker;
+
+    public OrderRepositoryServiceBean(OrderRepositoryServiceBeanWorker repositoryBeanWorker) {
+        this.repositoryBeanWorker = repositoryBeanWorker;
+    }
+
     @Override
     public Order findOrderByIdNN(Id<Order, UUID> orderId, String viewName) {
 
-    };
+        return repositoryBeanWorker.findOrderByIdNN(orderId, viewName);
+    }
 
     @Override
     public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String viewName) {
