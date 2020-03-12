@@ -54,6 +54,18 @@ public class StorageRepositoryServiceBeanWorker {
     }
 
     public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                                  String storageView, View storageItemView) {
+        return findStoragesWhichCanProvideOrder(orderId,
+                viewRepository.getView(Storage.class, storageView), storageItemView);
+    }
+
+    public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                                  View storageView, String storageItemView) {
+        return findStoragesWhichCanProvideOrder(orderId, storageView,
+                viewRepository.getView(StorageItem.class, storageItemView));
+    }
+
+    public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
                                                                   View storageView, View storageItemView) {
         CubaQueryFactory queryFactory = new CubaQueryFactory(txDm, metadata);
 

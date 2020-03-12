@@ -4,7 +4,6 @@ import com.company.shop.core.ShopIntegrationSpecification
 import com.company.shop.entity.*
 import com.haulmont.cuba.core.entity.contracts.Id
 import com.haulmont.cuba.core.global.AppBeans
-import com.haulmont.cuba.core.global.CommitContext
 import com.haulmont.cuba.core.global.View
 
 class StorageRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecification {
@@ -140,15 +139,11 @@ class StorageRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecificatio
         storageItem4.product = product2
         storageItem4.count = 12
 
-        def cc = new CommitContext()
-
         dataManager.commit(product1, product2,
                 order1, orderItem1, orderItem2,
                 order2, orderItem3, orderItem4,
                 storage1, storageItem1, storageItem2,
                 storage2, storageItem3, storageItem4)
-
-        dataManager.commit(cc)
 
         when:
         def appropriateStorages = delegate
