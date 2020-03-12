@@ -7,6 +7,7 @@ import com.company.shop.entity.OrderStatus
 import com.company.shop.entity.Product
 import com.haulmont.cuba.core.entity.contracts.Id
 import com.haulmont.cuba.core.global.AppBeans
+import com.haulmont.cuba.core.global.View
 
 class OrderItemRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecification {
 
@@ -43,7 +44,7 @@ class OrderItemRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecificat
         dataManager.commit(product1, order1, orderItem1, order2, orderItem2)
 
         when:
-        def fetched = delegate.findOrderItemsByOrder(Id.of(order1))
+        def fetched = delegate.findOrderItemsByOrder(Id.of(order1), View.MINIMAL)
 
         then:
         fetched == [orderItem1]

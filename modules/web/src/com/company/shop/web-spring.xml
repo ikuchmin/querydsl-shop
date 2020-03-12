@@ -16,8 +16,6 @@
                 <entry key="shop_StorageRepositoryService" value="com.company.shop.service.StorageRepositoryService"/>
                 <entry key="shop_OrderItemRepositoryService"
                        value="com.company.shop.service.OrderItemRepositoryService"/>
-                <entry key="shop_StorageItemRepositoryService"
-                       value="com.company.shop.service.StorageItemRepositoryService"/>
             </map>
         </property>
     </bean>

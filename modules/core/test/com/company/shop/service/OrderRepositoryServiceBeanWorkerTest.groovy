@@ -1,13 +1,11 @@
 package com.company.shop.service
 
 import com.company.shop.core.ShopIntegrationSpecification
-import com.company.shop.entity.Order
-import com.company.shop.entity.OrderStatus
-import com.company.shop.entity.OrderStorageItem
-import com.company.shop.entity.Storage
+import com.company.shop.entity.*
 import com.haulmont.cuba.core.entity.contracts.Id
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.View
+import com.haulmont.cuba.core.global.ViewBuilder
 
 class OrderRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecification {
 
@@ -32,6 +30,34 @@ class OrderRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecification 
         newOrder == fetched
     }
 
+
+    def "check that finding Order with Customer by id works as well"() {
+        given:
+        def newCustomer = metadata.create(Customer)
+        newCustomer.with {
+            firstName = 'Test'
+            lastName = 'Testov'
+        }
+        dataManager.commit(newCustomer)
+
+        def newOrder = metadata.create(Order)
+        newOrder.with {
+            number = '42AB452' + String.valueOf(Math.round(Math.random() * 1000))
+            customer = newCustomer
+        }
+        dataManager.commit(newOrder)
+
+        def orderWithCustomer = ViewBuilder.of(Order)
+                .addView(View.MINIMAL).add("customer", View.MINIMAL)
+                .build()
+
+        when:
+        def fetched = delegate.findOrderByIdNN(Id.of(newOrder), orderWithCustomer)
+
+        then:
+        newOrder == fetched
+        newCustomer == fetched.customer
+    }
 
     def "check that finding committed orders by storage id works as well"() {
         given:

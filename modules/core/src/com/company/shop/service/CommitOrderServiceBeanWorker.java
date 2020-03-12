@@ -5,14 +5,15 @@ import com.company.shop.entity.OrderItem;
 import com.company.shop.entity.OrderStatus;
 import com.company.shop.entity.OrderStorageItem;
 import com.company.shop.entity.Storage;
-import com.company.shop.entity.StorageItem;
 import com.company.shop.exception.AppropriateStorageNotFound;
 import com.haulmont.cuba.core.TransactionalDataManager;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.CommitContext;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,12 +30,12 @@ public class CommitOrderServiceBeanWorker {
 
     protected OrderItemRepositoryServiceBeanWorker orderItemRepository;
 
-    protected StorageItemRepositoryServiceBeanWorker storageItemRepository;
-
     public Order commitOrder(Id<Order, UUID> orderId, String viewName) {
 
-        List<Storage> appropriateStorages = storageRepository
-                .findStoragesWhichCanProvideOrder(orderId, viewName);
+        // todo resolve
+        List<Storage> appropriateStorages = Collections.emptyList();
+                //storageRepository
+                // .findStoragesWhichCanProvideOrder(orderId, viewName, viewName);
 
         if (appropriateStorages.isEmpty()) {
             throw new AppropriateStorageNotFound(orderId);
@@ -49,15 +50,10 @@ public class CommitOrderServiceBeanWorker {
         cc.addInstanceToCommit(order);
 
         List<OrderItem> orderItemsByOrder =
-                orderItemRepository.findOrderItemsByOrder(orderId);
+                orderItemRepository.findOrderItemsByOrder(orderId, View.LOCAL);
 
         for (OrderItem orderItem : orderItemsByOrder) {
-            List<StorageItem> storageItems = storageItemRepository
-                    .findStorageItemsWhichCanProvideOrderItem(Id.of(selectedStorage), Id.of(orderItem));
 
-            if (storageItems.isEmpty()) {
-
-            }
             //cc.addInstanceToCommit(storageItem);
 
         }
