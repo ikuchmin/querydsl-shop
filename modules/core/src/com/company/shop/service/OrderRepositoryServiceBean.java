@@ -24,7 +24,7 @@ public class OrderRepositoryServiceBean implements OrderRepositoryService {
     }
 
     @Override
-    public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String viewName) {
-        return repositoryBeanWorker.findCommittedOrdersByStorage(storageId);
+    public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String view) {
+        return repositoryBeanWorker.findCommittedOrdersByStorage(storageId, view);
     }
 }

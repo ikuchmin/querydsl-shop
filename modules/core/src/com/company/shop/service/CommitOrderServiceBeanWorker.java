@@ -15,6 +15,7 @@ import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.View;
 import com.haulmont.cuba.core.global.ViewBuilder;
+import com.haulmont.cuba.core.global.ViewRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class CommitOrderServiceBeanWorker {
     private Persistence persistence;
     protected TransactionalDataManager txDm;
 
+    private ViewRepository viewRepository;
     protected Metadata metadata;
 
     protected OrderRepositoryServiceBeanWorker orderRepository;
@@ -38,17 +40,23 @@ public class CommitOrderServiceBeanWorker {
     protected StorageRepositoryServiceBeanWorker storageRepository;
 
 
-    public CommitOrderServiceBeanWorker(Persistence persistence, TransactionalDataManager txDm, Metadata metadata,
+    public CommitOrderServiceBeanWorker(Persistence persistence, TransactionalDataManager txDm,
+                                        ViewRepository viewRepository, Metadata metadata,
                                         OrderRepositoryServiceBeanWorker orderRepository,
                                         StorageRepositoryServiceBeanWorker storageRepository) {
         this.persistence = persistence;
         this.txDm = txDm;
+        this.viewRepository = viewRepository;
         this.metadata = metadata;
         this.orderRepository = orderRepository;
         this.storageRepository = storageRepository;
     }
 
-    public Order commitOrder(Id<Order, UUID> orderId, String viewName) {
+    public Order commitOrder(Id<Order, UUID> orderId, String view) {
+        return commitOrder(orderId, viewRepository.getView(Order.class, view));
+    }
+
+    public Order commitOrder(Id<Order, UUID> orderId, View view) {
 
         View storageItemWithProductView = ViewBuilder.of(StorageItem.class)
                 .addView(View.LOCAL)
@@ -66,7 +74,7 @@ public class CommitOrderServiceBeanWorker {
 
         // mark order as submitted
         View orderView = ViewBuilder.of(Order.class)
-                .addView(viewName)
+                .addView(view)
                 .add("orderStatus")
                 .add("orderItems", vb -> vb
                         .addView(View.LOCAL)
@@ -114,7 +122,7 @@ public class CommitOrderServiceBeanWorker {
             txDm.save(reducedStorageItems.toArray(new StorageItem[0]));
             txDm.save(orderStorageItem);
 
-            Order savedOrder = txDm.save(order, viewName);
+            Order savedOrder = txDm.save(order, view);
 
             tx.commit();
 

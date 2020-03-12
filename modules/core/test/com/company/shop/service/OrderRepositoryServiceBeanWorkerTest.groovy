@@ -79,7 +79,7 @@ class OrderRepositoryServiceBeanWorkerTest extends ShopIntegrationSpecification 
         dataManager.commit(order1, order2, storage, orderStorageItem)
 
         when:
-        def fetched = delegate.findCommittedOrdersByStorage(Id.of(storage))
+        def fetched = delegate.findCommittedOrdersByStorage(Id.of(storage), view)
 
         then:
         fetched == [order2]

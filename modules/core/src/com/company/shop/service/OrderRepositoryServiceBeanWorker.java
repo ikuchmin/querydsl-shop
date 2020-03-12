@@ -53,7 +53,7 @@ public class OrderRepositoryServiceBeanWorker {
         throw new IllegalStateException("No results");
     }
 
-    public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId) {
+    public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String view) {
 
         CubaQueryFactory queryFactory = new CubaQueryFactory(txDm, metadata);
 
@@ -64,7 +64,7 @@ public class OrderRepositoryServiceBeanWorker {
                 .from(orderStorageItem).join(orderStorageItem.order, order)
                 .where(orderStorageItem.storage.id.eq(storageId.getValue()))
                 .orderBy(order.updateTs.desc())
-                .fetch();
+                .fetch(view);
     }
 
 }

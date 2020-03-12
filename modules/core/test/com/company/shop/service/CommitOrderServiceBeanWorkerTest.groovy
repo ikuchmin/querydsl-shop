@@ -58,6 +58,7 @@ class CommitOrderServiceBeanWorkerTest extends ShopIntegrationSpecification {
 
         then:
         committedOrder.orderStatus == OrderStatus.RESERVED
+
         (storageItem1.count - orderItem1.count) ==
                 dataManager.load(Id.of(storageItem1))
                         .view(View.LOCAL).one().count
@@ -66,6 +67,12 @@ class CommitOrderServiceBeanWorkerTest extends ShopIntegrationSpecification {
                 dataManager.load(Id.of(storageItem2))
                         .view(View.LOCAL).one().count
 
-
+        // will throw exception if item is not found
+        dataManager.load(OrderStorageItem)
+                .query("select os from shop_OrderStorageItem os\n" +
+                        "where os.order.id = :orderId and os.storage.id = :storageId")
+                .parameter("orderId", order1.id)
+                .parameter("storageId", storage1.id)
+                .one()
     }
 }
