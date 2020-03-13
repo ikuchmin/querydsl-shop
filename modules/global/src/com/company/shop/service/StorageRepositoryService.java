@@ -4,6 +4,7 @@ import com.company.shop.entity.Order;
 import com.company.shop.entity.Storage;
 import com.company.shop.entity.StorageItem;
 import com.haulmont.cuba.core.entity.contracts.Id;
+import com.haulmont.cuba.core.global.View;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,8 +13,21 @@ import java.util.UUID;
 public interface StorageRepositoryService {
     String NAME = "shop_StorageRepositoryService";
 
-    List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,  String storageView, String storageItemView);
+    List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                           String storageView,
+                                                           String storageItemView);
 
+    List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                           View storageView,
+                                                           String storageItemView);
+
+    List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                           String storageView,
+                                                           View storageItemView);
+
+    List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId,
+                                                           View storageView,
+                                                           View storageItemView);
     class StorageForOrder implements Serializable {
 
         Storage appropriateStorage;

@@ -2,6 +2,7 @@ package com.company.shop.service;
 
 import com.company.shop.entity.Order;
 import com.haulmont.cuba.core.entity.contracts.Id;
+import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,21 @@ public class StorageRepositoryServiceBean implements StorageRepositoryService {
     @Override
     public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId, String storageView, String storageItemView) {
 
-       // "select storage from shop_Storage storage, shop_OrderItem orderItem inner join storage.storageItems as si where orderItem.product.id = si.product.id and orderItem.count < si.count";
+        return storageRepositoryBeanWorker.findStoragesWhichCanProvideOrder(orderId, storageView, storageItemView);
+    }
+
+    @Override
+    public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId, View storageView, String storageItemView) {
+        return storageRepositoryBeanWorker.findStoragesWhichCanProvideOrder(orderId, storageView, storageItemView);
+    }
+
+    @Override
+    public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId, String storageView, View storageItemView) {
+        return storageRepositoryBeanWorker.findStoragesWhichCanProvideOrder(orderId, storageView, storageItemView);
+    }
+
+    @Override
+    public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId, View storageView, View storageItemView) {
         return storageRepositoryBeanWorker.findStoragesWhichCanProvideOrder(orderId, storageView, storageItemView);
     }
 }

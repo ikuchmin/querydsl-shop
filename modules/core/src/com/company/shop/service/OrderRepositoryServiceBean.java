@@ -3,6 +3,7 @@ package com.company.shop.service;
 import com.company.shop.entity.Order;
 import com.company.shop.entity.Storage;
 import com.haulmont.cuba.core.entity.contracts.Id;
+import com.haulmont.cuba.core.global.View;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +19,14 @@ public class OrderRepositoryServiceBean implements OrderRepositoryService {
     }
 
     @Override
-    public Order findOrderByIdNN(Id<Order, UUID> orderId, String viewName) {
+    public Order findOrderByIdNN(Id<Order, UUID> orderId, String view) {
 
-        return repositoryBeanWorker.findOrderByIdNN(orderId, viewName);
+        return repositoryBeanWorker.findOrderByIdNN(orderId, view);
+    }
+
+    @Override
+    public Order findOrderByIdNN(Id<Order, UUID> orderId, View view) {
+        return repositoryBeanWorker.findOrderByIdNN(orderId, view);
     }
 
     @Override

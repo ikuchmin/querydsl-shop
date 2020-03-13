@@ -14,8 +14,17 @@ public class OrderItemRepositoryServiceBean implements OrderItemRepositoryServic
 
     protected OrderItemRepositoryServiceBeanWorker orderItemRepositoryServiceBeanWorker;
 
+    public OrderItemRepositoryServiceBean(OrderItemRepositoryServiceBeanWorker orderItemRepositoryServiceBeanWorker) {
+        this.orderItemRepositoryServiceBeanWorker = orderItemRepositoryServiceBeanWorker;
+    }
+
     @Override
-    public List<OrderItem> findOrderItemsByOrder(Id<Order, UUID> orderId) {
-        return orderItemRepositoryServiceBeanWorker.findOrderItemsByOrder(orderId, View.LOCAL);
+    public List<OrderItem> findOrderItemsByOrder(Id<Order, UUID> orderId, String view) {
+        return orderItemRepositoryServiceBeanWorker.findOrderItemsByOrder(orderId, view);
+    }
+
+    @Override
+    public List<OrderItem> findOrderItemsByOrder(Id<Order, UUID> orderId, View view) {
+        return orderItemRepositoryServiceBeanWorker.findOrderItemsByOrder(orderId, view);
     }
 }
