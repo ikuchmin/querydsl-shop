@@ -2,9 +2,9 @@
 
 There is a project to demonstrate how to use QueryDSL CUBA.platform App Component 
 
-### Recommend to see
+## Recommend to see
 
-#### Join
+### Join
 
 Method: `com.company.shop.service.OrderRepositoryServiceBeanWorker.findCommittedOrdersByStorage`
 
@@ -18,7 +18,7 @@ queryFactory.select(order)
             .fetch(view);
 ```
 
-#### Comparing
+### Comparing
 
 Method: `com.company.shop.service.StorageRepositoryServiceBeanWorker.findStoragesWhichCanProvideOrder(com.haulmont.cuba.core.entity.contracts.Id<com.company.shop.entity.Order,java.util.UUID>, com.haulmont.cuba.core.global.View, com.haulmont.cuba.core.global.View)`
 
@@ -35,6 +35,6 @@ List<StorageItem> appropriateStorageItems = queryFactory.select(storageItem)
 
 ```
 
-### How to run
+## How to run
 
 It is a typical CUBA.platform project. You can run it as usual CUBA.platform project. 
