@@ -1,14 +1,12 @@
-# Introduction
+## Introduction
 
-There is a project to demonstrate how to use QueryDSL CUBA.platform App Component 
+The project demonstrates how to use [QueryDSL](https://github.com/ikuchmin/querydsl-cuba) add-on in CUBA applications. It can be run as usual CUBA project.   
 
-## Recommend to see
+## Usage
 
-### Join
+The project presents service beans that implement methods, using type-safe queries.
 
-Method: `com.company.shop.service.OrderRepositoryServiceBeanWorker.findCommittedOrdersByStorage`
-
-##### Query:
+Here is an example of using `join` in query. It is an extract from the `public List<Order> findCommittedOrdersByStorage(Id<Storage, UUID> storageId, String view)` method in the `OrderRepositoryServiceBeanWorker` service bean.
 
 ```java
 queryFactory.select(order)
@@ -18,11 +16,7 @@ queryFactory.select(order)
             .fetch(view);
 ```
 
-### Comparing
-
-Method: `com.company.shop.service.StorageRepositoryServiceBeanWorker.findStoragesWhichCanProvideOrder(com.haulmont.cuba.core.entity.contracts.Id<com.company.shop.entity.Order,java.util.UUID>, com.haulmont.cuba.core.global.View, com.haulmont.cuba.core.global.View)`
-
-##### Query:
+Comparing can be performed like in the following example. It is an extract from the `public List<StorageForOrder> findStoragesWhichCanProvideOrder(Id<Order, UUID> orderId, View storageView, View storageItemView)` method in the `StorageRepositoryServiceBeanWorker` service bean:
 
 ```java
 List<StorageItem> appropriateStorageItems = queryFactory.select(storageItem)
@@ -34,7 +28,3 @@ List<StorageItem> appropriateStorageItems = queryFactory.select(storageItem)
             .fetch(storageWithItems);
 
 ```
-
-## How to run
-
-It is a typical CUBA.platform project. You can run it as usual CUBA.platform project. 
