@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.cubaVersion = '7.2-SNAPSHOT'
+    ext.cubaVersion = '7.2.2'
     repositories {
         mavenLocal()
         maven {
@@ -30,14 +30,14 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.company.shop'
-        version = '0.1'
-        isSnapshot = true
+        version = '1.0.0'
+        isSnapshot = false
     }
 }
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:0.1-SNAPSHOT')
+    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:1.0.0')
 }
 
 def postgres = 'org.postgresql:postgresql:42.2.9'
