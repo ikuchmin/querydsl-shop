@@ -12,10 +12,10 @@ import com.haulmont.cuba.core.TransactionalDataManager;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.core.global.ViewRepository;
 import org.springframework.stereotype.Component;
 import ru.udya.querydsl.cuba.core.CubaQueryFactory;
+import ru.udya.querydsl.cuba.core.view.TypedViewFactory;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -33,16 +33,19 @@ public class StorageRepositoryServiceBeanWorker {
     protected TransactionalDataManager txDm;
 
     protected Metadata metadata;
-    private ViewRepository viewRepository;
-    private OrderItemRepositoryServiceBeanWorker orderItemRepository;
+    protected ViewRepository viewRepository;
+    protected TypedViewFactory typedViewFactory;
+
+    protected OrderItemRepositoryServiceBeanWorker orderItemRepository;
 
     public StorageRepositoryServiceBeanWorker(TransactionalDataManager txDm,
-                                              Metadata metadata,
-                                              ViewRepository viewRepository,
+                                              Metadata metadata, ViewRepository viewRepository,
+                                              TypedViewFactory typedViewFactory,
                                               OrderItemRepositoryServiceBeanWorker orderItemRepository) {
         this.txDm = txDm;
         this.metadata = metadata;
         this.viewRepository = viewRepository;
+        this.typedViewFactory = typedViewFactory;
         this.orderItemRepository = orderItemRepository;
     }
 
@@ -69,15 +72,15 @@ public class StorageRepositoryServiceBeanWorker {
                                                                   View storageView, View storageItemView) {
         CubaQueryFactory queryFactory = new CubaQueryFactory(txDm, metadata);
 
-        View storageWithItems = ViewBuilder.of(StorageItem.class)
-                .add("product", View.LOCAL)
-                .add("storage", View.LOCAL)
-                .addView(storageItemView)
-                .build();
-
         QStorageItem storageItem = QStorageItem.storageItem;
 
         QOrderItem orderItem = QOrderItem.orderItem;
+
+        View storageWithItems = typedViewFactory.view(storageItem)
+                .property(storageItem.product, (qp, qpb) -> qpb.extendByViews(View.LOCAL))
+                .property(storageItem.storage, (qs, qsb) -> qsb.extendByViews(View.LOCAL))
+                .extendByViews(storageItemView)
+                .build();
 
         List<StorageItem> appropriateStorageItems = queryFactory.select(storageItem)
                 .from(storageItem, orderItem)
@@ -92,8 +95,10 @@ public class StorageRepositoryServiceBeanWorker {
                         .collect(groupingBy(StorageItem::getStorage));
 
         // post filtering
-        View orderItemWithProduct = ViewBuilder.of(OrderItem.class).addView(View.LOCAL)
-                .add("product", View.MINIMAL).build();
+        View orderItemWithProduct = typedViewFactory
+                .view(orderItem).extendByViews(View.LOCAL)
+                .property(orderItem.product, (qp, qpb) -> qpb.extendByViews(View.MINIMAL))
+                .build();
 
         List<OrderItem> orderItems = orderItemRepository
                 .findOrderItemsByOrder(orderId, orderItemWithProduct);

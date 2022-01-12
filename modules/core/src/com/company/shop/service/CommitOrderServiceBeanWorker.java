@@ -5,6 +5,8 @@ import com.company.shop.entity.OrderItem;
 import com.company.shop.entity.OrderStatus;
 import com.company.shop.entity.OrderStorageItem;
 import com.company.shop.entity.Product;
+import com.company.shop.entity.QOrder;
+import com.company.shop.entity.QStorageItem;
 import com.company.shop.entity.StorageItem;
 import com.company.shop.exception.AppropriateStorageNotFound;
 import com.company.shop.service.StorageRepositoryService.StorageForOrder;
@@ -14,9 +16,9 @@ import com.haulmont.cuba.core.TransactionalDataManager;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.core.global.View;
-import com.haulmont.cuba.core.global.ViewBuilder;
 import com.haulmont.cuba.core.global.ViewRepository;
 import org.springframework.stereotype.Component;
+import ru.udya.querydsl.cuba.core.view.TypedViewFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +30,13 @@ import java.util.stream.Collectors;
 @Component
 public class CommitOrderServiceBeanWorker {
 
-
-    private Persistence persistence;
+    protected Persistence persistence;
     protected TransactionalDataManager txDm;
 
-    private ViewRepository viewRepository;
+    protected ViewRepository viewRepository;
     protected Metadata metadata;
+
+    protected TypedViewFactory typedViewFactory;
 
     protected OrderRepositoryServiceBeanWorker orderRepository;
 
@@ -42,12 +45,14 @@ public class CommitOrderServiceBeanWorker {
 
     public CommitOrderServiceBeanWorker(Persistence persistence, TransactionalDataManager txDm,
                                         ViewRepository viewRepository, Metadata metadata,
+                                        TypedViewFactory typedViewFactory,
                                         OrderRepositoryServiceBeanWorker orderRepository,
                                         StorageRepositoryServiceBeanWorker storageRepository) {
         this.persistence = persistence;
         this.txDm = txDm;
         this.viewRepository = viewRepository;
         this.metadata = metadata;
+        this.typedViewFactory = typedViewFactory;
         this.orderRepository = orderRepository;
         this.storageRepository = storageRepository;
     }
@@ -58,9 +63,10 @@ public class CommitOrderServiceBeanWorker {
 
     public Order commitOrder(Id<Order, UUID> orderId, View view) {
 
-        View storageItemWithProductView = ViewBuilder.of(StorageItem.class)
-                .addView(View.LOCAL)
-                .add("product", View.MINIMAL)
+        var qStorageItem = QStorageItem.storageItem;
+        View storageItemWithProductView = typedViewFactory
+                .view(qStorageItem).extendByViews(View.LOCAL)
+                .property(qStorageItem.product, (qp, qpb) -> qpb.extendByViews(View.MINIMAL))
                 .build();
 
         List<StorageForOrder> appropriateStorages = storageRepository
@@ -73,12 +79,14 @@ public class CommitOrderServiceBeanWorker {
         StorageForOrder selectedStorage = appropriateStorages.get(0);
 
         // mark order as submitted
-        View orderView = ViewBuilder.of(Order.class)
-                .addView(view)
-                .add("orderStatus")
-                .add("orderItems", vb -> vb
-                        .addView(View.LOCAL)
-                        .add("product", View.MINIMAL))
+        var qOrder = QOrder.order;
+        View orderView = typedViewFactory
+                .view(qOrder).extendByViews(view)
+                .property(qOrder.orderStatus)
+                .property(qOrder.orderItems, (oi, oib) ->
+                        oib.extendByViews(View.LOCAL)
+                                .property(oi.product,
+                                        (p, pb) -> pb.extendByViews(View.MINIMAL)))
                 .build();
 
         Order order = orderRepository.findOrderByIdNN(orderId, orderView);

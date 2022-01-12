@@ -1,0 +1,12 @@
+version: '3.8'
+# do not use here variables from env files. TC doesn't have support for env files
+services:
+  database:
+    image: postgres:latest
+#    do not commit ports to do not confuse TeamCity Agents
+#    ports:
+#      - 5432:5432
+    environment:
+      POSTGRES_USER: cuba
+      POSTGRES_PASSWORD: cuba
+      POSTGRES_DB: shop

@@ -37,7 +37,7 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:1.0.0')
+    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:1.2.0-SNAPSHOT')
 }
 
 def postgres = 'org.postgresql:postgresql:42.2.9'

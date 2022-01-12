@@ -10,7 +10,8 @@ public class ShopTestContainer extends TestContainer {
     public ShopTestContainer() {
         super();
         appComponents = new ArrayList<>(Arrays.asList(
-                "com.haulmont.cuba"
+                "com.haulmont.cuba",
+                "ru.udya.querydsl.cuba"
                 // add CUBA premium add-ons here
                 // "com.haulmont.bpm",
                 // "com.haulmont.charts",

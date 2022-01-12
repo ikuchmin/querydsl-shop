@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:latest
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_USER: cuba
+      POSTGRES_PASSWORD: cuba
+      POSTGRES_DB: shop
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+volumes:
+  dbdata:
