@@ -83,10 +83,8 @@ public class CommitOrderServiceBeanWorker {
         View orderView = typedViewFactory
                 .view(qOrder).extendByViews(view)
                 .property(qOrder.orderStatus)
-                .property(qOrder.orderItems, (oi, oib) ->
-                        oib.extendByViews(View.LOCAL)
-                                .property(oi.product,
-                                        (p, pb) -> pb.extendByViews(View.MINIMAL)))
+                .property(qOrder.orderItems, (oi, oib) -> oib.extendByViews(View.LOCAL)
+                        .property(oi.product, (p, pb) -> pb.extendByViews(View.MINIMAL)))
                 .build();
 
         Order order = orderRepository.findOrderByIdNN(orderId, orderView);
