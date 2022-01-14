@@ -14,7 +14,7 @@
             <DependencyModelState>
               <option name="group" value="ru.udya.querydsl.cuba" />
               <option name="name" value="querydsl-cuba-global" />
-              <option name="version" value="1.2.0-SNAPSHOT" />
+              <option name="version" value="2.0.0" />
               <option name="configuration" value="appComponent" />
             </DependencyModelState>
             <DependencyModelState>
@@ -32,7 +32,7 @@
             <DependencyModelState>
               <option name="group" value="ru.udya.querydsl.cuba" />
               <option name="name" value="querydsl-cuba-core" />
-              <option name="version" value="1.2.0-SNAPSHOT" />
+              <option name="version" value="2.0.0" />
               <option name="configuration" value="compile" />
             </DependencyModelState>
             <DependencyModelState>
@@ -134,7 +134,7 @@
             <DependencyModelState>
               <option name="group" value="ru.udya.querydsl.cuba" />
               <option name="name" value="querydsl-cuba-global" />
-              <option name="version" value="1.2.0-SNAPSHOT" />
+              <option name="version" value="2.0.0" />
               <option name="configuration" value="compile" />
             </DependencyModelState>
             <DependencyModelState>

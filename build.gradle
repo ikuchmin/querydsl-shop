@@ -10,6 +10,9 @@ buildscript {
                 password(rootProject.hasProperty('repoPass') ? rootProject['repoPass'] : 'cuba123')
             }
         }
+        maven {
+            url 'https://repo.cuba-platform.com/content/repositories/public-addons'
+        }
         
     }
     dependencies {
@@ -37,7 +40,7 @@ cuba {
 
 dependencies {
     appComponent("com.haulmont.cuba:cuba-global:$cubaVersion")
-    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:2.0.0-SNAPSHOT')
+    appComponent('ru.udya.querydsl.cuba:querydsl-cuba-global:2.0.0')
 }
 
 def postgres = 'org.postgresql:postgresql:42.2.9'
